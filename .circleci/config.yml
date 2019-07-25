@@ -6,17 +6,17 @@ jobs:
       - image: circleci/android:api-28-alpha
     environment:
       JAVA_OPTS: "-Xms512m -Xmx1024m"
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" -Dorg.gradle.daemon=false --no-daemon' 
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" -Dorg.gradle.daemon=false' 
     steps:
       - run: yes | sdkmanager --licenses || exit 0
       - run: yes | sdkmanager --update || exit 0
       - checkout
       - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
+          name: Download Dependencies 
+          command: ./gradlew androidDependencies --no-daemon
       - run:
           name: Run Tests
-          command: ./gradlew check 
+          command: ./gradlew check --no-daemon
           
   release_artifacts:
     working_directory: ~/code
